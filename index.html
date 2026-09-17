@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>蘇軾在惠州 ｜ 互動式學習網頁</title>
+
+<!-- Fonts (fontsource CDN) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-tc@5.0.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-tc@5.0.0/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-tc@5.0.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-tc@5.0.0/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-tc@5.0.0/700.css">
+
+<style>
+/* ============ 設計變數 ============ */
+:root{
+  --paper:#f6f0e4;
+  --paper-2:#fffaf1;
+  --ink:#211e19;
+  --ink-2:#4c463b;
+  --ink-3:#7a7263;
+  --line:#d9cdb6;
+  --vermilion:#b0342a;
+  --vermilion-soft:#e8c9c2;
+  --jade:#3d6b58;
+  --gold:#b98b3f;
+  --card:#fffdf7;
+  --shadow:0 10px 30px rgba(60,45,25,.10);
+  --shadow-lg:0 20px 50px rgba(60,45,25,.16);
+  --radius:18px;
+  --fs:17px;
+}
+[data-theme="night"]{
+  --paper:#171512;
+  --paper-2:#1f1c17;
+  --ink:#ece4d4;
+  --ink-2:#c3b8a3;
+  --ink-3:#938874;
+  --line:#3a342a;
+  --vermilion:#e0685a;
+  --vermilion-soft:#4a2b26;
+  --jade:#7fbfa2;
+  --gold:#dcae63;
+  --card:#211e18;
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{
+  font-family:"Noto Sans TC","Noto Serif TC",serif;
+  background:var(--paper);color:var(--ink);
+  font-size:var(--fs);line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+  transition:background .4s,color .4s;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+  background-image:radial-gradient(circle at 15% 20%, rgba(185,139,63,.10), transparent 45%),
+                   radial-gradient(circle at 85% 70%, rgba(61,107,88,.10), transparent 45%);
+}
+h1,h2,h3,h4,.serif{font-family:"Noto Serif TC","Noto Sans TC",serif}
+section{position:relative;z-index:1}
+a{color:inherit}
+
+/* ============ 進度條 & 導覽 ============ */
+#progressBar{position:fixed;top:0;left:0;height:3px;width:0;z-index:1000;
+  background:linear-gradient(90deg,var(--vermilion),var(--gold));transition:width .1s linear}
+header.nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+  transition:transform .35s ease, box-shadow .3s;
+}
+header.nav.hide{transform:translateY(-105%)}
+header.nav.shadowed{box-shadow:var(--shadow)}
+.nav-inner{max-width:1180px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.06em;white-space:nowrap}
+.seal{width:34px;height:34px;border-radius:6px;background:var(--vermilion);color:#fff;
+  display:grid;place-items:center;font-family:"Noto Serif TC",serif;font-size:14px;line-height:1.05;
+  box-shadow:0 3px 10px rgba(176,52,42,.35);transform:rotate(-4deg)}
+.nav-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{padding:7px 12px;border-radius:999px;font-size:14px;white-space:nowrap;color:var(--ink-2);
+  text-decoration:none;transition:.25s}
+.nav-links a:hover{background:var(--paper-2);color:var(--ink)}
+.nav-links a.active{background:var(--ink);color:var(--paper);font-weight:500}
+.nav-tools{display:flex;gap:6px;align-items:center}
+.tool-btn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--card);
+  color:var(--ink-2);cursor:pointer;font-size:13px;display:grid;place-items:center;transition:.25s}
+.tool-btn:hover{border-color:var(--vermilion);color:var(--vermilion);transform:translateY(-1px)}
+#burger{display:none}
+
+/* ============ Hero ============ */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding:120px 20px 60px;max-width:1180px;margin:0 auto;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.22em;
+  color:var(--vermilion);border:1px solid var(--vermilion-soft);padding:6px 14px;border-radius:999px;
+  background:color-mix(in srgb,var(--vermilion) 7%,transparent)}
+.hero h1{font-size:clamp(46px,7vw,86px);line-height:1.12;margin:22px 0 6px;letter-spacing:.02em}
+.hero h1 .accent{color:var(--vermilion);position:relative}
+.hero .sub{font-size:clamp(16px,2vw,20px);color:var(--ink-2);max-width:36em;margin-top:10px}
+.hero-quote{margin-top:26px;padding:16px 20px;border-left:3px solid var(--gold);
+  background:var(--card);border-radius:0 14px 14px 0;box-shadow:var(--shadow);max-width:34em}
+.hero-quote .q{font-family:"Noto Serif TC",serif;font-size:19px;line-height:1.9}
+.hero-quote .src{font-size:13px;color:var(--ink-3);margin-top:6px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{border:none;cursor:pointer;font-family:inherit;font-size:15px;padding:13px 26px;border-radius:999px;
+  font-weight:500;transition:.28s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--ink);color:var(--paper);box-shadow:var(--shadow)}
+.btn-primary:hover{background:var(--vermilion);transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--ink-2)}
+.btn-ghost:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-2px)}
+.stats{display:flex;gap:26px;flex-wrap:wrap;margin-top:38px}
+.stat{min-width:96px}
+.stat .num{font-family:"Noto Serif TC",serif;font-size:34px;color:var(--vermilion);line-height:1}
+.stat .lbl{font-size:13px;color:var(--ink-3);margin-top:6px;letter-spacing:.05em}
+.hero-art{position:relative}
+.hero-art svg{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 30px rgba(60,45,25,.16))}
+.float{animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:12px;
+  letter-spacing:.3em;color:var(--ink-3);display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll-cue .bar{width:1px;height:36px;background:linear-gradient(var(--ink-3),transparent);animation:drop 2s infinite}
+@keyframes drop{0%{opacity:0;transform:scaleY(.2);transform-origin:top}40%{opacity:1}100%{opacity:0;transform:scaleY(1)}}
+
+/* ============ 通用區塊 ============ */
+.wrap{max-width:1180px;margin:0 auto;padding:84px 20px}
+.sec-head{display:flex;align-items:flex-end;gap:18px;margin-bottom:12px;flex-wrap:wrap}
+.sec-no{font-family:"Noto Serif TC",serif;font-size:14px;color:var(--vermilion);letter-spacing:.28em;
+  border:1px solid var(--vermilion-soft);border-radius:8px;padding:4px 10px;background:color-mix(in srgb,var(--vermilion) 6%,transparent)}
+.sec-head h2{font-size:clamp(28px,4vw,40px);line-height:1.3}
+.sec-desc{color:var(--ink-2);max-width:52em;margin-bottom:34px}
+.rule{height:1px;background:linear-gradient(90deg,var(--line),transparent);margin:14px 0 30px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:24px;box-shadow:var(--shadow);transition:.35s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.grid{display:grid;gap:20px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.tag{display:inline-block;font-size:12px;padding:3px 10px;border-radius:999px;
+  background:color-mix(in srgb,var(--jade) 14%,transparent);color:var(--jade);letter-spacing:.05em}
+.tag.red{background:color-mix(in srgb,var(--vermilion) 12%,transparent);color:var(--vermilion)}
+.tag.gold{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold)}
+h3.t{font-size:21px;margin-bottom:10px}
+p.muted{color:var(--ink-2)}
+ul.dots{list-style:none;margin-top:10px}
+ul.dots li{position:relative;padding-left:20px;margin-bottom:8px;color:var(--ink-2)}
+ul.dots li::before{content:"";position:absolute;left:2px;top:.75em;width:7px;height:7px;border-radius:50%;
+  background:var(--vermilion);opacity:.75}
+.hl{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--gold) 42%,transparent) 0);font-weight:500;color:var(--ink)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ============ 翻牌卡 ============ */
+.flip{perspective:1200px;height:190px;cursor:pointer}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+.flip.on .flip-inner{transform:rotateY(180deg)}
+.flip-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius);
+  border:1px solid var(--line);background:var(--card);padding:22px;display:flex;flex-direction:column;
+  justify-content:center;box-shadow:var(--shadow)}
+.flip-face .ico{font-size:34px;margin-bottom:8px}
+.flip-face h4{font-size:20px}
+.flip-face small{color:var(--ink-3);font-size:13px}
+.flip-back{transform:rotateY(180deg);background:var(--ink);color:var(--paper);border-color:transparent}
+.flip-back p{font-size:14.5px;line-height:1.8;color:color-mix(in srgb,var(--paper) 82%,transparent)}
+[data-theme="night"] .flip-back{background:#0d0c0a;color:var(--ink)}
+
+/* ============ Tabs ============ */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.tab-btn{padding:9px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);
+  cursor:pointer;font-family:inherit;font-size:14.5px;color:var(--ink-2);transition:.25s}
+.tab-btn:hover{border-color:var(--ink-3);color:var(--ink)}
+.tab-btn.active{background:var(--vermilion);border-color:var(--vermilion);color:#fff;font-weight:500}
+.panel{display:none;animation:fadeUp .5s ease}
+.panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* ============ 手風琴 ============ */
+.acc{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);margin-bottom:12px}
+.acc-h{width:100%;text-align:left;padding:16px 20px;background:transparent;border:none;cursor:pointer;
+  font-family:inherit;font-size:16px;color:var(--ink);display:flex;align-items:center;gap:12px;transition:.25s}
+.acc-h:hover{background:color-mix(in srgb,var(--gold) 9%,transparent)}
+.acc-h .n{font-family:"Noto Serif TC",serif;color:var(--vermilion);font-size:14px;min-width:24px}
+.acc-h .chev{margin-left:auto;transition:transform .35s;color:var(--ink-3)}
+.acc.open .acc-h .chev{transform:rotate(180deg)}
+.acc-b{max-height:0;overflow:hidden;transition:max-height .45s ease}
+.acc-b .inner{padding:0 20px 18px;color:var(--ink-2);font-size:15.5px}
+
+/* ============ 時間軸 ============ */
+.timeline{position:relative;padding-left:34px;margin-top:10px}
+.timeline::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;
+  background:linear-gradient(var(--vermilion),var(--gold),var(--jade))}
+.tl-item{position:relative;margin-bottom:22px}
+.tl-item::before{content:"";position:absolute;left:-31px;top:8px;width:14px;height:14px;border-radius:50%;
+  background:var(--paper);border:3px solid var(--vermilion);box-shadow:0 0 0 4px color-mix(in srgb,var(--vermilion) 15%,transparent)}
+.tl-item .date{font-size:13px;letter-spacing:.08em;color:var(--vermilion);font-weight:500}
+.tl-item h4{font-size:18px;margin:2px 0 4px}
+.tl-item p{font-size:15px;color:var(--ink-2)}
+
+/* ============ 貶謫路線 ============ */
+.route{display:grid;grid-template-columns:1.1fr .9fr;gap:26px;align-items:start}
+.route svg{width:100%;height:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.node{cursor:pointer}
+.node circle.dot{transition:.3s}
+.node:hover circle.dot{r:13}
+.node.sel circle.dot{fill:var(--vermilion)}
+.node text{font-family:"Noto Sans TC",sans-serif;font-size:14px;fill:var(--ink)}
+.node .yr{font-size:11.5px;fill:var(--ink-3)}
+.dash{stroke-dasharray:6 6;animation:march 22s linear infinite}
+@keyframes march{to{stroke-dashoffset:-400}}
+.detail-card{background:var(--ink);color:var(--paper);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow-lg);min-height:330px}
+[data-theme="night"] .detail-card{background:#0d0c0a}
+.detail-card h3{font-size:26px;margin-bottom:4px}
+.detail-card .meta{font-size:13px;color:var(--gold);letter-spacing:.14em;margin-bottom:16px}
+.detail-card dl{display:grid;grid-template-columns:88px 1fr;gap:8px 14px;font-size:15px}
+.detail-card dt{color:color-mix(in srgb,var(--paper) 55%,transparent)}
+.detail-card dd{color:color-mix(in srgb,var(--paper) 92%,transparent)}
+
+/* ============ 詩卷 ============ */
+.poem{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);
+  padding:30px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.poem::after{content:"";position:absolute;right:-40px;bottom:-40px;width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb,var(--vermilion) 12%,transparent),transparent 70%)}
+.poem .p-title{font-size:15px;color:var(--vermilion);letter-spacing:.16em;margin-bottom:16px}
+.verse{font-family:"Noto Serif TC",serif;font-size:22px;line-height:2.15;cursor:pointer;
+  padding:2px 8px;border-radius:8px;transition:.3s;display:inline-block}
+.verse:hover{background:color-mix(in srgb,var(--gold) 16%,transparent)}
+.verse.picked{background:var(--vermilion);color:#fff}
+.explain{margin-top:16px;padding:16px 18px;border-radius:12px;background:color-mix(in srgb,var(--jade) 10%,transparent);
+  border-left:3px solid var(--jade);font-size:15px;color:var(--ink-2);min-height:56px}
+.poem-tools{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.mini-btn{padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);
+  cursor:pointer;font-family:inherit;font-size:13.5px;color:var(--ink-2);transition:.25s}
+.mini-btn:hover{border-color:var(--vermilion);color:var(--vermilion)}
+
+/* ============ 對話播放器 ============ */
+.stage{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.bubble{max-width:78%;padding:12px 16px;border-radius:16px;margin-bottom:12px;font-size:15.5px;
+  animation:pop .4s cubic-bezier(.2,1.4,.4,1);line-height:1.7}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+.bubble .who{font-size:12px;letter-spacing:.1em;opacity:.7;display:block;margin-bottom:3px}
+.bubble.left{background:var(--paper);border:1px solid var(--line);border-bottom-left-radius:4px}
+.bubble.right{margin-left:auto;background:var(--ink);color:var(--paper);border-bottom-right-radius:4px}
+[data-theme="night"] .bubble.right{background:#0d0c0a}
+.bubble.laugh{background:color-mix(in srgb,var(--gold) 22%,transparent);border:1px dashed var(--gold)}
+
+/* ============ 家族樹 ============ */
+.family{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.fcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;text-align:center;
+  cursor:pointer;transition:.3s;position:relative;overflow:hidden}
+.fcard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:var(--gold)}
+.fcard.sel{border-color:var(--vermilion);box-shadow:0 0 0 3px color-mix(in srgb,var(--vermilion) 18%,transparent)}
+.fcard .avatar{width:64px;height:64px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;
+  font-family:"Noto Serif TC",serif;font-size:24px;color:#fff}
+.fcard h4{font-size:19px}
+.fcard .role{font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.fcard .more{max-height:0;overflow:hidden;transition:max-height .5s ease;text-align:left}
+.fcard.sel .more{max-height:280px}
+.fcard .more p{font-size:14px;color:var(--ink-2);margin-top:12px;border-top:1px dashed var(--line);padding-top:12px}
+
+/* ============ 測驗 ============ */
+.quiz{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:var(--shadow-lg)}
+.q-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.q-bar{height:6px;background:var(--paper);border-radius:99px;overflow:hidden;flex:1;min-width:140px;border:1px solid var(--line)}
+.q-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--vermilion),var(--gold));transition:width .5s}
+.q-text{font-family:"Noto Serif TC",serif;font-size:22px;line-height:1.75;margin-bottom:20px}
+.opt{display:block;width:100%;text-align:left;padding:14px 18px;margin-bottom:10px;border-radius:14px;
+  border:1px solid var(--line);background:var(--paper-2);cursor:pointer;font-family:inherit;font-size:16px;
+  color:var(--ink);transition:.25s}
+.opt:hover:not(:disabled){border-color:var(--vermilion);transform:translateX(4px)}
+.opt .k{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--ink);color:var(--paper);font-size:13px;margin-right:12px;vertical-align:middle}
+.opt.right{border-color:var(--jade);background:color-mix(in srgb,var(--jade) 14%,transparent)}
+.opt.right .k{background:var(--jade)}
+.opt.wrong{border-color:var(--vermilion);background:color-mix(in srgb,var(--vermilion) 12%,transparent)}
+.opt.wrong .k{background:var(--vermilion)}
+.opt:disabled{cursor:default;opacity:.9}
+.feedback{margin-top:14px;padding:16px;border-radius:14px;font-size:15px;display:none;
+  background:color-mix(in srgb,var(--gold) 12%,transparent);border-left:3px solid var(--gold);color:var(--ink-2)}
+.feedback.show{display:block;animation:fadeUp .4s}
+.q-foot{display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:12px;flex-wrap:wrap}
+.score-ring{width:170px;height:170px;margin:0 auto 18px}
+.wrong-list{margin-top:18px;text-align:left}
+.wrong-list .wi{padding:12px 14px;border-radius:12px;background:var(--paper-2);border:1px solid var(--line);margin-bottom:8px;font-size:14.5px}
+.wrong-list .wi b{color:var(--vermilion)}
+
+/* ============ 字卡 ============ */
+.flash{perspective:1400px;height:250px;cursor:pointer}
+.flash .flip-inner{height:100%}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius);padding:28px;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border:1px solid var(--line)}
+.flash-front{background:var(--card);box-shadow:var(--shadow)}
+.flash-front h3{font-size:30px;font-family:"Noto Serif TC",serif}
+.flash-back{transform:rotateY(180deg);background:var(--ink);color:var(--paper);border:none;font-size:16px;line-height:1.9}
+[data-theme="night"] .flash-back{background:#0d0c0a}
+
+/* ============ 檢查清單 ============ */
+.check{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;background:var(--card);
+  border:1px solid var(--line);cursor:pointer;transition:.25s;margin-bottom:8px;font-size:15px}
+.check:hover{border-color:var(--jade)}
+.check .box{width:22px;height:22px;border-radius:7px;border:2px solid var(--line);flex:0 0 auto;
+  display:grid;place-items:center;transition:.25s;color:#fff;font-size:13px}
+.check.done{background:color-mix(in srgb,var(--jade) 9%,transparent);border-color:var(--jade)}
+.check.done .box{background:var(--jade);border-color:var(--jade)}
+.check.done span{text-decoration:line-through;color:var(--ink-3)}
+
+/* ============ 荔枝朝代卡 ============ */
+.dyn{display:grid;grid-template-columns:120px 1fr;gap:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card);box-shadow:var(--shadow)}
+.dyn .era{background:linear-gradient(160deg,var(--ink),#3a342a);color:var(--paper);display:grid;place-items:center;
+  font-family:"Noto Serif TC",serif;font-size:28px;padding:22px 10px;text-align:center}
+[data-theme="night"] .dyn .era{background:linear-gradient(160deg,#0d0c0a,#26221b)}
+.dyn .body{padding:22px}
+.quote{font-family:"Noto Serif TC",serif;font-size:17px;line-height:2;color:var(--ink);
+  padding:12px 16px;border-left:3px solid var(--vermilion);background:var(--paper-2);border-radius:0 10px 10px 0;margin-top:12px}
+.quote small{display:block;font-family:"Noto Sans TC",sans-serif;font-size:13px;color:var(--ink-3);margin-top:6px}
+
+/* ============ 其他 ============ */
+.method{display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:14px;background:var(--paper-2);
+  border:1px solid var(--line);transition:.3s}
+.method:hover{transform:translateY(-3px);border-color:var(--gold)}
+.method .idx{width:38px;height:38px;border-radius:10px;background:var(--gold);color:#fff;display:grid;place-items:center;
+  font-family:"Noto Serif TC",serif;flex:0 0 auto}
+.note{font-size:13.5px;color:var(--ink-3);margin-top:10px}
+.pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.pill{font-size:13px;padding:5px 12px;border-radius:999px;background:var(--paper);border:1px solid var(--line);color:var(--ink-2)}
+.pill.red{border-color:var(--vermilion-soft);color:var(--vermilion)}
+.pill.jade{border-color:color-mix(in srgb,var(--jade) 40%,transparent);color:var(--jade)}
+
+#toTop{position:fixed;right:22px;bottom:22px;width:48px;height:48px;border-radius:50%;border:none;
+  background:var(--ink);color:var(--paper);cursor:pointer;font-size:18px;z-index:800;opacity:0;pointer-events:none;
+  transition:.35s;box-shadow:var(--shadow-lg)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{background:var(--vermilion);transform:translateY(-3px)}
+
+/* 側邊點狀導覽 */
+.dots-nav{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:800;display:flex;flex-direction:column;gap:12px}
+.dots-nav a{width:9px;height:9px;border-radius:50%;background:var(--line);transition:.3s;position:relative}
+.dots-nav a.on{background:var(--vermilion);transform:scale(1.4)}
+.dots-nav a::after{content:attr(data-tip);position:absolute;right:20px;top:50%;transform:translateY(-50%);
+  white-space:nowrap;font-size:12px;background:var(--ink);color:var(--paper);padding:3px 10px;border-radius:6px;
+  opacity:0;pointer-events:none;transition:.25s}
+.dots-nav a:hover::after{opacity:1}
+
+footer{border-top:1px solid var(--line);padding:40px 20px;text-align:center;color:var(--ink-3);font-size:14px;position:relative;z-index:1}
+
+@media(max-width:960px){
+  .hero-grid,.route,.g4,.g3,.g2{grid-template-columns:1fr}
+  .family{grid-template-columns:1fr 1fr}
+  .dyn{grid-template-columns:1fr}
+  .dots-nav{display:none}
+  .hero-art{order:-1;max-width:420px;margin:0 auto}
+  .nav-links{position:fixed;top:58px;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--line);
+    flex-direction:column;padding:12px;gap:2px;display:none;max-height:70vh;overflow-y:auto}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:11px 14px}
+  #burger{display:grid}
+  .wrap{padding:64px 18px}
+}
+@media(max-width:560px){
+  .family{grid-template-columns:1fr}
+  .verse{font-size:19px}
+  .detail-card dl{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="progressBar"></div>
+
+<!-- ============ 導覽列 ============ -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="brand"><span class="seal">東坡</span><span class="serif">蘇軾在惠州</span></div>
+    <nav class="nav-links" id="navLinks">
+      <a href="#start">開始</a>
+      <a href="#identity">多重身分</a>
+      <a href="#party">新舊黨爭</a>
+      <a href="#wutai">烏臺詩案</a>
+      <a href="#exile">三次被貶</a>
+      <a href="#zhangdun">章惇</a>
+      <a href="#family">家族</a>
+      <a href="#chaoyun">朝雲</a>
+      <a href="#change">心境轉變</a>
+      <a href="#lychee">荔枝</a>
+      <a href="#history">荔枝書寫史</a>
+      <a href="#quiz">測驗</a>
+      <a href="#cards">字卡</a>
+    </nav>
+    <div class="nav-tools">
+      <button class="tool-btn" id="fontDown" title="縮小字級">A-</button>
+      <button class="tool-btn" id="fontUp" title="放大字級">A+</button>
+      <button class="tool-btn" id="themeBtn" title="夜讀模式">☾</button>
+      <button class="tool-btn" id="burger" title="選單">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- 側邊點導覽 -->
+<div class="dots-nav" id="dotsNav"></div>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="start">
+  <div class="hero-grid">
+    <div>
+      <span class="kicker">宋哲宗紹聖元年 · 西元 1094</span>
+      <h1>蘇軾<span class="accent">在惠州</span></h1>
+      <p class="sub">從「極力擺脫名利」到「身世永相忘」——一次比一次偏遠的貶謫，卻成就了思想與文學的最高峰。跟著東坡走過黨爭、喪妾、瘴癘之地，以及那一顆讓他甘願再被貶到海南的荔枝。</p>
+
+      <div class="hero-quote">
+        <div class="q" id="heroQuote">心似已灰之木，身如不繫之舟。問汝平生功業，黃州惠州儋州。</div>
+        <div class="src" id="heroSrc">——蘇軾〈自題金山畫像〉</div>
+      </div>
+
+      <div class="hero-btns">
+        <a class="btn btn-primary" href="#party">開始學習 →</a>
+        <button class="btn btn-ghost" id="quoteBtn">換一句東坡 ⟳</button>
+        <a class="btn btn-ghost" href="#quiz">直接挑戰測驗</a>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="num">3</div><div class="lbl">次被貶</div></div>
+        <div class="stat"><div class="num">59</div><div class="lbl">歲赴嶺南</div></div>
+        <div class="stat"><div class="num">47</div><div class="lbl">首和陶詩</div></div>
+        <div class="stat"><div class="num">5</div><div class="lbl">主僕同行</div></div>
+        <div class="stat"><div class="num">34</div><div class="lbl">朝雲卒年</div></div>
+      </div>
+    </div>
+
+    <div class="hero-art float">
+      <!-- 水墨山水 SVG -->
+      <svg viewBox="0 0 520 460" role="img" aria-label="水墨山水與荔枝">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f7ecd8"/><stop offset="100%" stop-color="#e9dcc2"/>
+          </linearGradient>
+          <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8fa39a"/><stop offset="100%" stop-color="#c9d3c8"/>
+          </linearGradient>
+          <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5b6f66"/><stop offset="100%" stop-color="#93a49a"/>
+          </linearGradient>
+          <linearGradient id="m3" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#33443e"/><stop offset="100%" stop-color="#5d7168"/>
+          </linearGradient>
+          <radialGradient id="sun"><stop offset="0%" stop-color="#e8b16a"/><stop offset="100%" stop-color="#d98b4a" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect x="0" y="0" width="520" height="460" rx="20" fill="url(#sky)"/>
+        <circle cx="370" cy="120" r="86" fill="url(#sun)" opacity=".8"/>
+        <circle cx="370" cy="120" r="34" fill="#d98b4a" opacity=".75"/>
+        <!-- 遠山 -->
+        <path d="M0 210 Q70 150 130 200 T260 190 Q330 150 400 205 T520 195 V460 H0Z" fill="url(#m1)" opacity=".55"/>
+        <!-- 中山 -->
+        <path d="M0 265 Q90 195 165 258 Q215 300 275 250 Q350 190 430 262 Q480 300 520 275 V460 H0Z" fill="url(#m2)" opacity=".7"/>
+        <!-- 近山 -->
+        <path d="M0 330 Q80 275 150 325 Q220 372 300 320 Q390 262 460 330 Q495 362 520 348 V460 H0Z" fill="url(#m3)"/>
+        <!-- 湖面 -->
+        <path d="M0 372 H520 V460 H0Z" fill="#cfd9d0" opacity=".55"/>
+        <g stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-linecap="round">
+          <path d="M60 395 h70"/><path d="M180 405 h90"/><path d="M320 392 h60"/><path d="M110 425 h120"/><path d="M300 432 h100"/>
+        </g>
+        <!-- 小舟 -->
+        <g transform="translate(205,388)">
+          <path d="M0 0 q30 14 60 0 q-8 12 -30 12 q-22 0 -30 -12z" fill="#3b3229"/>
+          <path d="M28 -2 v-26" stroke="#3b3229" stroke-width="2"/>
+          <path d="M28 -28 q14 6 12 20 q-8 -6 -12 -6z" fill="#7d6a52"/>
+          <circle cx="14" cy="-8" r="4.5" fill="#3b3229"/>
+        </g>
+        <!-- 荔枝枝 -->
+        <g transform="translate(430,60)">
+          <path d="M0 0 q-14 34 -6 66" stroke="#5a4a35" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M-4 22 q-30 -6 -40 12 q26 10 42 -4z" fill="#4e7a5c"/>
+          <path d="M-2 46 q28 -10 40 6 q-24 14 -42 2z" fill="#3f6b4e"/>
+          <circle cx="-14" cy="52" r="13" fill="#b0342a"/><circle cx="8" cy="62" r="11" fill="#c8453a"/>
+          <circle cx="-6" cy="74" r="9" fill="#98301f"/>
+          <g fill="#fff" fill-opacity=".22">
+            <circle cx="-18" cy="48" r="1.6"/><circle cx="-11" cy="56" r="1.6"/><circle cx="-17" cy="58" r="1.6"/>
+            <circle cx="5" cy="58" r="1.5"/><circle cx="11" cy="65" r="1.5"/><circle cx="-9" cy="72" r="1.4"/>
+          </g>
+        </g>
+        <!-- 印章 -->
+        <g transform="translate(30,400)">
+          <rect width="46" height="46" rx="5" fill="#b0342a" opacity=".9"/>
+          <text x="23" y="22" font-size="15" fill="#fff" text-anchor="middle" font-family="Noto Serif TC,serif">東</text>
+          <text x="23" y="40" font-size="15" fill="#fff" text-anchor="middle" font-family="Noto Serif TC,serif">坡</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>SCROLL</span><span class="bar"></span></div>
+</section>
+
+<!-- ============ 學習地圖 ============ -->
+<section class="wrap" id="map">
+  <div class="sec-head reveal">
+    <span class="sec-no">MAP</span>
+    <h2>學習地圖．完成度追蹤</h2>
+  </div>
+  <div class="rule"></div>
+  <p class="sec-desc reveal">點選下方項目記錄你的學習進度（會自動儲存在瀏覽器中）。共 10 個單元，全部完成後會出現「東坡知己」勳章。</p>
+  <div class="grid g2">
+    <div class="reveal" id="checkList"></div>
+    <div class="card reveal" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
+      <svg class="score-ring" viewBox="0 0 120 120" id="mapRing">
+        <circle cx="60" cy="60" r="52" fill="none" stroke="var(--line)" stroke-width="10"/>
+        <circle id="mapRingFill" cx="60" cy="60" r="52" fill="none" stroke="var(--vermilion)" stroke-width="10"
+          stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"
+          transform="rotate(-90 60 60)" style="transition:stroke-dashoffset .8s"/>
+        <text id="mapPct" x="60" y="58" text-anchor="middle" font-size="26" font-family="Noto Serif TC,serif" fill="var(--ink)">0%</text>
+        <text x="60" y="78" text-anchor="middle" font-size="11" fill="var(--ink-3)" font-family="Noto Sans TC,sans-serif">完成度</text>
+      </svg>
+      <div id="badge" style="display:none;margin-top:8px">
+        <span class="tag gold" style="font-size:14px;padding:8px 16px">🏅 東坡知己．全數通關！</span>
+      </div>
+      <p class="note">提示：完成測驗並答對 8 題以上，可獲得額外加分勳章。</p>
+      <button class="mini-btn" id="resetMap" style="margin-top:14px">重置學習進度</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 一、多重身分 ============ -->
+<section class="wrap" id="identity">
+  <div class="sec-head reveal"><span class="sec-no">01</span><h2>蘇軾的多重身分</h2></div>
+  <div class="rule"></div>
+  <p class="sec-desc reveal">點擊卡片翻面，認識東坡的四種面貌。正是這種「跨域」的生命厚度，讓他即使在貶謫之中，也能處處找到安頓自己的方式。</p>
+  <div class="grid g4" id="identityCards">
+    <div class="flip reveal"><div class="flip-inner">
+      <div class="flip-face"><div class="ico">✒️</div><h4>文學家</h4><small>詩・詞・文・賦</small></div>
+      <div class="flip-face flip-back"><p>唐宋八大家之一。惠州時期作四十七首「和陶詩」，並有〈食荔支〉〈過大庾嶺〉等名篇，在山水詠唱中忘卻故我。</p></div>
+    </div></div>
+    <div class="flip reveal"><div class="flip-inner">
+      <div class="flip-face"><div class="ico">🏛️</div><h4>政治家</h4><small>新舊黨爭的失意者</small></div>
+      <div class="flip-face flip-back"><p>因烏臺詩案與黨爭三度被貶：黃州、惠州、儋州。到惠州後對政治不再抱有幻想，轉而更關心百姓疾苦。</p></div>
+    </div></div>
+    <div class="flip reveal"><div class="flip-inner">
+      <div class="flip-face"><div class="ico">🖌️</div><h4>藝術家</h4><small>書法・繪畫・題跋</small></div>
+      <div class="flip-face flip-back"><p>書列「蘇黃米蔡」四大家。親筆為朝雲寫《墓誌銘》：「浮屠是瞻，伽藍是依。如汝宿心，唯佛是歸。」</p></div>
+    </div></div>
+    <div class="flip reveal"><div class="flip-inner">
+      <div class="flip-face"><div class="ico">🍜</div><h4>美食家</h4><small>三大美味</small></div>
+      <div class="flip-face flip-back"><p>荔枝、河豚魚、江瑤柱。黃州有東坡肉，惠州有羊脊骨與荔枝，儋州有生蠔——貶到哪裡，就吃到哪裡。</p></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ============ 二、新舊黨爭 ============ -->
+<section class="wrap" id="party">
+  <div class="sec-head reveal"><span class="sec-no">02</span><h2>新舊黨爭概談</h2></div>
+  <div class="rule"></div>
+  <p class="sec-desc reveal">黨爭最初因<span class="hl">政見不同</span>而起，後來演變成<span class="hl">排除異己的奪權之爭</span>：兩派官吏互相攻擊，一得勢就貶斥另一派士大夫。蘇軾的政治生涯，正是陷入這漩渦而屢遭迫害。</p>
+
+  <div class="grid g2">
+    <div class="card reveal" style="border-top:4px solid var(--vermilion)">
+      <span class="tag red">支持新政</span>
+      <h3 class="t" style="margin-top:10px">新黨</h3>
+      <p class="muted">宋神宗力圖改革宋仁宗慶曆新政以來遺下的弊端，拜王安石為宰相，開以新政，是為<b>王安石變法</b>。</p>
+      <div class="pill-row">
+        <span class="pill red">王安石</span><span class="pill red">呂惠卿</span><span class="pill red">曾布</span>
+        <span class="pill red">章惇</span><span class="pill red">韓絳</span>
+      </div>
+    </div>
+    <div class="card reveal" style="border-top:4px solid var(--jade)">
+      <span class="tag">反對新政</span>
+      <h3 class="t" style="margin-top:10px">舊黨</h3>
+      <p class="muted">新政雖切中時弊，但實行上有問題，且得罪朝中保守派大臣的既得利益，遭到舊黨極力反對。</p>
+      <div class="pill-row">
+        <span class="pill jade">韓琦</span><span class="pill jade">司馬光</span><span class="pill jade">歐陽修</span>
+        <span class="pill jade">蘇軾</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal" style="margin-top:22px">
+    <h3 class="t">黨爭如何一步步把蘇軾推向嶺南？</h3>
+    <div class="timeline">
+      <div class="tl-item"><div class="date">神宗朝</div><h4>王安石變法</h4><p>新政推行，新舊兩派對立成形；蘇軾因詩文「託事以諷」遭新黨人士攻訐。</p></div>
+      <div class="tl-item"><div class="date">元豐二年（1079）</div><h4>烏臺詩案</h4><p>蘇軾下御史臺獄一百三十天，出獄後貶黃州團練副使。</p></div>
+      <div class="tl-item"><div class="date">元祐更化</div><h4>舊黨得勢，新黨失位</h4><p>司馬光等執政，蘇軾一度回朝；但與章惇等人已生嫌隙。</p></div>
+      <div class="tl-item"><div class="date">紹聖元年（1094）</div><h4>新黨再起，章惇為相</h4><p>開始迫害「元祐黨人」，御史趙挺之、來之邵彈劾蘇軾所作誥詞「謗譏先帝」。</p></div>
+      <div class="tl-item"><div class="date">紹聖四年（1097）</div><h4>再貶儋州</h4><p>一次比一次偏遠，一次比一次絕望；卻也是思想與文學發展的最高峰。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 三、烏臺詩案 ============ -->
+<section class="wrap" id="wutai">
+  <div class="sec-head reveal"><span class="sec-no">03</span><h2>貶官生涯的開端：烏臺詩案</h2></div>
+  <div class="rule"></div>
+  <div class="grid g2" style="align-items:start">
+    <div>
+      <div class="card reveal">
+        <h3 class="t">「烏臺」是什麼？</h3>
+        <p class="muted">即<b>御史臺</b>。因漢代御史府內遍植柏樹，又稱「柏臺」；柏樹上常有烏鴉棲息築巢，乃稱<b>烏臺</b>。</p>
+        <p class="muted" style="margin-top:10px">案發於宋神宗<b>元豐二年（1079）</b>，是蘇軾政治生涯的重大轉折；後經多方力保，改謫黃州團練副使安置。</p>
+      </div>
+      <div class="card reveal" style="margin-top:18px">
+        <h3 class="t">導火線：《湖州謝上表》</h3>
+        <p class="muted">蘇軾由徐州移知湖州，四月二十日到任，進《湖州謝上表》。李定、何正臣、舒亶、李宜之等人認為：</p>
+        <ul class="dots">
+          <li>「<b>生事</b>」——針對熙寧變法。</li>
+          <li>「<b>新進</b>」——針對因變法而被擢用的官員。</li>
+          <li>數日之內連番上劄子、狀子彈劾，並搬出蘇軾舊時「託事以諷」的詩文，群起攻擊陷害。</li>
+        </ul>
+      </div>
+      <div class="card reveal" style="margin-top:18px">
+        <h3 class="t">結果</h3>
+        <p class="muted">神宗敕責授檢校尚書部員外郎，充<b>黃州團練副使</b>，本州安置，<b>不得簽署公事</b>。團練副使是閒職，蘇軾實質上是被貶黃州，此案亦牽連一大批官員。</p>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="t reveal" style="margin-bottom:12px">蘇軾是如何被誣陷的？（點開看罪名）</h3>
+      <div class="reveal">
+        <div class="acc"><button class="acc-h"><span class="n">壹</span>何正臣：妄自尊大<span class="chev">▾</span></button>
+          <div class="acc-b"><div class="inner">指蘇軾「<b>愚弄朝廷，妄自尊大</b>」，把謝上表中的自謙與自陳之語，解讀為對朝廷的輕慢。</div></div></div>
+        <div class="acc"><button class="acc-h"><span class="n">貳</span>李定：四大可廢之罪<span class="chev">▾</span></button>
+          <div class="acc-b"><div class="inner">御史李定曾因不服母孝，受蘇軾譏諷，於此案中指蘇軾有：<br>
+            ①「悛終不悔，其惡已著」<br>②「傲悖之語，日聞中外」<br>③「言偽而辯，行偽而堅」<br>④「怨己不用」<br>四者皆為「可廢之罪」，帶有明顯的私怨色彩。</div></div></div>
+        <div class="acc"><button class="acc-h"><span class="n">參</span>舒亶：摘詩句，指其譏諷新政<span class="chev">▾</span></button>
+          <div class="acc-b"><div class="inner">御史舒亶尋摘蘇軾詩句，指其心懷不軌，譏諷神宗的<b>青苗法、助役法、明法科、興水利、鹽禁</b>等政策——以詩入罪，是本案最核心的手法。</div></div></div>
+      </div>
+
+      <div class="card reveal" style="margin-top:20px">
+        <h3 class="t">過程與時間線</h3>
+        <div class="timeline">
+          <div class="tl-item"><div class="date">七月二十八日</div><h4>湖州勾攝</h4><p>臺吏皇甫遵攜吏卒急馳湖州，勾攝蘇軾。</p></div>
+          <div class="tl-item"><div class="date">八月十八日</div><h4>下御史臺獄</h4><p>二十日即遭受審問，由御史中丞李定會合諫官張璪等台諫輪番鞠訊，逼迫蘇軾對語涉譏諷的詩文作出交代。</p></div>
+          <div class="tl-item"><div class="date">獄中一百三十天</div><h4>多方營救</h4><p>蘇轍、張方平、<b>章惇</b>、吳充、王安石、王安禮、太皇太后曹氏等人勸諫搭救。</p></div>
+          <div class="tl-item"><div class="date">十二月二十九日</div><h4>出獄貶黃州</h4><p>改謫黃州團練副使，本州安置，不得簽署公事。</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 四、三次被貶 ============ -->
+<section class="wrap" id="exile">
+  <div class="sec-head reveal"><span class="sec-no">04</span><h2>三次被貶：一次比一次偏遠</h2></div>
+  <div class="rule"></div>
+  <p class="sec-desc reveal">點擊地圖上的節點，查看每一次貶謫的時間、原因、代表作品與代表美食。</p>
+
+  <div class="route">
+    <svg viewBox="0 0 460 520" class="reveal" role="img" aria-label="蘇軾貶謫路線示意圖">
+      <rect width="460" height="520" rx="18" fill="var(--paper-2)"/>
+      <path d="M120 60 C 200 130, 90 200, 180 270 C 260 330, 150 400, 250 470"
+            fill="none" stroke="var(--gold)" stroke-width="3" stroke-dasharray="6 6" class="dash" opacity=".8"/>
+      <g class="node" data-id="0">
+        <circle class="dot" cx="120" cy="60" r="11" fill="var(--jade)"/>
+        <text x="142" y="56">黃州（湖北）</text><text class="yr" x="142" y="74">1080–1084 · 第一次</text>
+      </g>
+      <g class="node" data-id="1">
+        <circle class="dot" cx="180" cy="270" r="11" fill="var(--gold)"/>
+        <text x="202" y="266">惠州（廣東）</text><text class="yr" x="202" y="284">1094–1097 · 第二次</text>
+      </g>
+      <g class="node" data-id="2">
+        <circle class="dot" cx="250" cy="470" r="11" fill="var(--vermilion)"/>
+        <text x="272" y="466">儋州（海南島）</text><text class="yr" x="272" y="484">1097–1100 · 第三次</text>
+      </g>
+      <g opacity=".7">
+        <circle cx="60" cy="140" r="3" fill="var(--ink-3)"/><circle cx="330" cy="180" r="3" fill="var(--ink-3)"/>
+        <circle cx="80" cy="380" r="3" fill="var(--ink-3)"/><circle cx="380" cy="360" r="3" fill="var(--ink-3)"/>
+        <path d="M20 200 q80 -30 150 10 t180 -20" stroke="var(--line)" fill="none" stroke-width="1.5"/>
+        <path d="M30 430 q120 -40 200 0 t200 -20" stroke="var(--line)" fill="none" stroke-width="1.5"/>
+      </g>
+      <text x="30" y="500" font-size="12" fill="var(--ink-3)" font-family="Noto Sans TC,sans-serif">＊示意路線：由北而南，愈貶愈遠</text>
+    </svg>
+
+    <div class="detail-card reveal" id="exileDetail"></div>
+  </div>
+
+  <div class="grid g3" style="margin-top:26px">
+    <div class="card reveal">
+      <span class="tag red">貶惠州的過程</span>
+      <h3 class="t" style="margin-top:10px">從英州到惠州</h3>
+      <p class="muted">蘇軾在<b>定州</b>任上落職貶知英州（今廣東英德），紹聖元年閏四月接到誥命後便立馬出發。但途中章惇、蔡京、來之邵等人仍在哲宗面前不斷攻擊，哲宗<b>兩次加重處分</b>，改貶為寧遠軍節度副使，惠州安置，不得簽署公事。</p>
+    </div>
+    <div class="card reveal">
+      <span class="tag gold">心態轉變</span>
+      <h3 class="t" style="margin-top:10px">從黃州到惠州</h3>
+      <p class="muted">黃州時期是「<b>極力擺脫名利</b>」的態度；到了惠州，轉變為「<b>身世永相忘</b>」的心態。被貶謫的十幾年，卻是思想與文學發展的最高峰。</p>
+    </div>
+    <div class="card reveal">
+      <span class="tag">嶺南印象</span>
+      <h3 class="t" style="margin-top:10px">「蠻瘼之邦」</h3>
+      <p class="muted">當時嶺南氣候炎熱、疫病較多，人們稱之為「蠻瘼之邦」。五十九歲的蘇軾因舟車勞頓，患上嚴重的痔瘡——身體與環境的雙重煎熬。</p>
+    </div>
+  </div>
+
+  <!-- 自題金山畫像 -->
+  <div class="grid g2" style="margin-top:26px;align-items:start">
+    <div class="poem reveal" id="poemJinshan">
+      <div class="p-title">【自題金山畫像詩】· 點選詩句看解讀</div>
+      <div>
+        <span class="verse" data-exp="以「已灰之木」比喻心如死灰、不再為外物所動；正是從死灰中體悟本真。">心似已灰之木，</span><br>
+        <span class="verse" data-exp="「不繫之舟」形容自身如一葉無繫的小舟，漂流自在，無所牽絆——以虛舟漂行形容自己的自由自適。">身如不繫之舟。</span><br>
+        <span class="verse" data-exp="反問自己：你這一生究竟成就了什麼？語帶自嘲，也帶著對身世的無限喟嘆。">問汝平生功業，</span><br>
+        <span class="verse" data-exp="答案竟是三次被貶的流放之地！黃州、惠州、儋州是他三次被貶之處，他卻認為那才是功業所在。">黃州惠州儋州。</span>
+      </div>
+      <div class="explain" id="expJinshan">👆 點擊任一句詩，查看白話解讀。</div>
+      <div class="poem-tools">
+        <button class="mini-btn" data-all="poemJinshan">全部顯示解讀</button>
+      </div>
+    </div>
+    <div class="card reveal">
+      <h3 class="t">這首詩為什麼重要？</h3>
+      <ul class="dots">
+        <li>此詩為蘇軾歷經多年謫居、放逐生涯後，為自己所做的<b>一生總結</b>。</li>
+        <li>從死灰中體悟本真，以虛舟漂行形容自己的自由自適。</li>
+        <li>把三次被貶的流放之地說成「平生功業」，除了自嘲，更多的是對身世的無限喟嘆。</li>
+        <li>與惠州時期「身世永相忘」的心態相互印證：不再向政治索要意義，轉而在生活中自建價值。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 五、章惇 ============ -->
+<section class="wrap" id="zhangdun">
+  <div class="sec-head reveal"><span class="sec-no">05</span><h2>關鍵人物：奸相章惇</h2></div>
+  <div class="rule"></div>
+
+  <div class="grid g2" style="align-items:start">
+    <div class="card reveal" style="display:flex;gap:22px;align-items:flex-start">
+      <svg viewBox="0 0 150 190" width="150" style="flex:0 0 auto" aria-label="章惇意象圖">
+        <rect width="150" height="190" rx="14" fill="var(--paper-2)" stroke="var(--line)"/>
+        <path d="M18 176 q10 -60 57 -60 q47 0 57 60z" fill="#2f2c26"/>
+        <circle cx="75" cy="86" r="30" fill="#e6cfae"/>
+        <path d="M40 74 q35 -34 70 0 q-6 -26 -35 -26 q-29 0 -35 26z" fill="#1d1b17"/>
+        <rect x="34" y="58" width="82" height="9" rx="4" fill="#1d1b17"/>
+        <path d="M30 62 l-16 -6 M120 62 l16 -6" stroke="#1d1b17" stroke-width="5" stroke-linecap="round"/>
+        <path d="M62 86 q5 4 10 0 M78 86 q5 4 10 0" stroke="#3a3229" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <circle cx="66" cy="93" r="2.4" fill="#241f1a"/><circle cx="84" cy="93" r="2.4" fill="#241f1a"/>
+        <path d="M66 108 q9 5 18 0" stroke="#8a4a3a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <path d="M40 140 l70 0 l-6 36 l-58 0z" fill="#4a4238"/>
+        <rect x="104" y="132" width="10" height="52" rx="4" fill="#8a6a3f" transform="rotate(8 109 158)"/>
+      </svg>
+      <div>
+        <span class="tag red">新黨 · 獨相</span>
+        <h3 class="t" style="margin-top:8px">章惇（字子厚）</h3>
+        <p class="muted">宋哲宗紹聖元年（1094），新黨再起，章惇為相，開始對「元祐黨人」進行迫害。御史趙挺之、來之邵等人彈劾蘇軾所作之誥詞「謗譏先帝」，蘇軾因此踏上嶺南之路。</p>
+        <div class="quote" style="margin-top:14px">章惇能攀絕壁題字，面不改色。<small>蘇軾評：「子厚<b>必能殺人</b>。」——一句評語，預言了日後的迫害。</small></div>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <h3 class="t">相愛相殺：四個階段</h3>
+      <div class="tabs" data-tabs="zd">
+        <button class="tab-btn active" data-tab="zd1">① 極力救助</button>
+        <button class="tab-btn" data-tab="zd2">② 中生嫌隙</button>
+        <button class="tab-btn" data-tab="zd3">③ 獨相迫害</button>
+        <button class="tab-btn" data-tab="zd4">④ 情勢逆轉</button>
+      </div>
+      <div class="panel active" data-panel="zd1">
+        <p class="muted">元豐二年發生烏臺詩案，章惇<b>不顧黨派利益，極力救助蘇軾</b>。蘇軾出獄謫居黃州，章惇更致書勸勉，兩人互動密切。</p>
+      </div>
+      <div class="panel" data-panel="zd2">
+        <p class="muted">元祐更化時期，舊黨執政，兩人關係<b>中生嫌隙</b>。政見與立場的拉扯，讓昔日友人逐漸走向對立。</p>
+      </div>
+      <div class="panel" data-panel="zd3">
+        <p class="muted">紹聖改元，章惇獨相：<b>先貶蘇軾廣東惠州，再貶海南昌化</b>。據傳蘇軾食荔枝的詩句傳回京城，讓章惇非常不高興，於是又把他貶到更南邊的儋州（今海南島）。</p>
+      </div>
+      <div class="panel" data-panel="zd4">
+        <p class="muted">宋徽宗即位，章惇獲罪遠謫嶺南雷州；蘇軾得赦北歸，傳聞將拜相。章惇季子<b>章援是蘇軾門生</b>，特致書為老父求情。蘇軾胸懷開闊、不念舊惡，覆書慰問、殷殷叮嚀，還<b>授以嶺南養生之道</b>。</p>
+      </div>
+      <div class="note">★ 補充：宋哲宗死後，章惇反對端王趙佶繼位，議立簡王趙似遭欽聖太后所拒；他寧願立年長但有眼疾的申王趙佖，也不願擁立端王，甚至當欽聖太后之面明言：「<b>端王輕佻，不可以君天下</b>。」</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 六、家族與遣散 ============ -->
+<section class="wrap" id="family">
+  <div class="sec-head reveal"><span class="sec-no">06</span><h2>蘇軾的家族・遣散家人獨赴嶺南</h2></div>
+  <div class="rule"></div>
+  <p class="sec-desc reveal">點擊家庭成員卡片查看說明。赴惠州前，蘇軾重新安排了家人的去處。</p>
+
+  <div class="family reveal" id="familyGrid"></div>
+
+  <div class="grid g2" style="margin-top:24px;align-items:start">
+    <div class="card reveal">
+      <span class="tag gold">主僕五人</span>
+      <h3 class="t" style="margin-top:10px">誰跟著去惠州？</h3>
+      <p class="muted">五十九歲的蘇軾因舟車勞頓患上了嚴重的痔瘡，他對隨行的家人重新作了安排：</p>
+      <ul class="dots">
+        <li><b>前往宜興</b>：蘇迨、蘇過（皆王閏之生）的妻兒，與長子蘇邁（王弗生）同住。</li>
+        <li><b>前往惠州</b>：蘇軾自己 + 幼子蘇遁（朝雲生）+ 侍妾朝雲 + 兩個老婢 = <b>主僕五人</b>。</li>
+      </ul>
+      <div class="pill-row">
+        <span class="pill red">蘇軾</span><span class="pill red">王朝雲</span><span class="pill red">蘇遁</span>
+        <span class="pill">老婢 ×2</span>
+      </div>
+    </div>
+    <div class="card reveal">
+      <h3 class="t">為什麼要遣散家人？</h3>
+      <ul class="dots">
+        <li>嶺南氣候炎熱、疫病較多，被視為「蠻瘼之邦」，生死難料。</li>
+        <li>貶官「安置」不得簽署公事，無實權亦無充裕俸祿，養不起大家庭。</li>
+        <li>把子媳孫輩安排在宜興，是為家族留下一條退路。</li>
+        <li>幼子蘇遁未滿周歲而卒，朝雲亦在惠州過世——這趟南下，成了永別。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 七、朝雲 ============ -->
+<section class="wrap" id="chaoyun">
+  <div class="sec-head reveal"><span class="sec-no">07</span><h2>愛妾朝雲：一肚子不合時宜</h2></div>
+  <div class="rule"></div>
+
+  <div class="grid g2" style="align-items:start">
+    <div class="card reveal">
+      <span class="tag">字子霞 · 北宋錢塘人</span>
+      <h3 class="t" style="margin-top:10px">朝雲生平</h3>
+      <ul class="dots">
+        <li>原為歌女，<b>十二歲</b>入蘇家為侍女，後被蘇軾納為侍妾。</li>
+        <li>《東坡自述》中的〈朝雲詩引〉和〈悼朝雲詩引〉均有提到她。</li>
+        <li>與蘇軾感情甚篤；原本不識字，後來<b>學會寫字</b>。</li>
+        <li>跟從泗上比丘尼<b>義沖學佛</b>，篤信佛法。</li>
+        <li>紹聖元年隨蘇軾到惠州。</li>
+      </ul>
+      <div class="note">家庭角色：蘇遁（幼子）之生母。</div>
+    </div>
+
+    <div class="card reveal">
+      <span class="tag red">紹聖三年（1096）七月初五</span>
+      <h3 class="t" style="margin-top:10px">朝雲之死與六如亭</h3>
+      <p class="muted">朝雲卒，年三十四。彌留之際口誦《金剛經》六如偈：</p>
+      <div class="quote">一切為有法，如夢幻泡影。如露亦如電，應作如是觀。<small>《金剛經》六如偈</small></div>
+      <p class="muted" style="margin-top:14px">八月三日葬於惠州西湖南畔的<b>棲禪寺</b>，蘇軾親筆為她寫下《墓誌銘》：</p>
+      <div class="quote" style="border-left-color:var(--gold)">浮屠是瞻，伽藍是依。如汝宿心，唯佛是歸。<small>蘇軾〈朝雲墓誌銘〉</small></div>
+      <p class="muted" style="margin-top:14px">惠州棲禪寺大聖塔葬處作亭覆之，名之<b>六如亭</b>。</p>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-top:22px;align-items:start">
+    <div class="card reveal">
+      <h3 class="t">惠州時期的朝雲：生日與〈蝶戀花〉</h3>
+      <div class="timeline">
+        <div class="tl-item"><div class="date">紹聖二年（1095）五月四日</div><h4>朝雲生日</h4><p>東坡作〈殢人嬌·贈朝雲〉詞、〈浣溪沙·端午〉詞。</p></div>
+        <div class="tl-item"><div class="date">同年秋七月</div><h4>欲歌〈蝶戀花〉，久無聲</h4><p>東坡問其故，朝雲答：「奴不能歌者，是<b>枝上柳綿吹又少，天涯何處無芳草</b>。」</p></div>
+        <div class="tl-item"><div class="date">東坡的回應</div><h4>翻然大笑</h4><p>子瞻翻然大笑曰：「是吾正悲秋，而汝又傷春矣。」遂罷。</p></div>
+      </div>
+    </div>
+
+    <div class="stage reveal">
+      <h3 class="t">情景劇場：一肚子不合時宜</h3>
+      <p class="muted" style="font-size:14.5px;margin-bottom:14px">蘇軾退朝用膳後，帶著侍兒散步消食，手撫飽食的肚子發問——</p>
+      <div id="playArea" style="min-height:210px"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" id="playBtn" style="padding:11px 22px">▶ 播放對話</button>
+        <button class="mini-btn" id="resetPlay">重播</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 八、心境轉變 ============ -->
+<section class="wrap" id="change">
+  <div class="sec-head reveal"><span class="sec-no">08</span><h2>到惠州後的變化：恬淡知足</h2></div>
+  <div class="rule"></div>
+  <p class="sec-desc reveal">一方面他是<b>出世的、超脫的</b>，另一方面又是<b>入世的、凡俗的</b>——於悲涼之中夾雜著釋然。</p>
+
+  <div class="grid g2" style="align-items:start">
+    <div class="poem reveal" id="poemDayu">
+      <div class="p-title">【過大庾嶺】· 翻越大庾嶺，即將進入廣東時所作</div>
+      <div>
+        <span class="verse" data-exp="一念之間放下垢污牽累——離開中原政爭的漩渦，心靈獲得清洗。">一念失垢污，</span>
+        <span class="verse" data-exp="身心徹底清靜透明，是佛老思想在貶謫途中的一次實際體驗。">身心洞清靜。</span><br>
+        <span class="verse" data-exp="浩然天地之間，唯我獨也正：表現出蘇軾高潔的志向與坦然的心境。">浩然天地間，唯我獨也正。</span><br>
+        <span class="verse" data-exp="今日在嶺上前行，仙人撫我頭頂，自結髮起便受長生之道——以道家意象自我期許。">今日嶺上行，仙人拊我頂，結髮受長生。</span>
+      </div>
+      <div class="explain" id="expDayu">👆 點擊詩句，查看解讀。全詩核心：「浩然天地間、身世永相忘」。</div>
+      <div class="poem-tools"><button class="mini-btn" data-all="poemDayu">全部顯示解讀</button></div>
+    </div>
+
+    <div>
+      <div class="card reveal">
+        <h3 class="t">思想上的重大變化</h3>
+        <ul class="dots">
+          <li>對政治<b>不再抱有幻想</b>。</li>
+          <li>佛老的虛無思想變得<b>更加濃厚</b>。</li>
+          <li>更為<b>關心百姓的疾苦</b>。</li>
+          <li>從黃州「極力擺脫名利」→ 惠州「<b>身世永相忘</b>」。</li>
+        </ul>
+      </div>
+      <div class="card reveal" style="margin-top:18px">
+        <h3 class="t">徜徉山水・和陶詩發</h3>
+        <p class="muted">被貶惠州後，詩歌創作發生明顯變化：他徜徉在惠州美麗的山水之中，陶醉在如陶淵明的田園境界裡，消受他的生命，重新構建他的精神世界。他以一種<b>完全不同於韓愈</b>的態度和智慧，獨立於中國士人隊伍之中。</p>
+        <div class="tabs" data-tabs="ch" style="margin-top:16px">
+          <button class="tab-btn active" data-tab="ch1">變化一：山水</button>
+          <button class="tab-btn" data-tab="ch2">變化二：和陶</button>
+          <button class="tab-btn" data-tab="ch3">和陶詩三類</button>
+        </div>
+        <div class="panel active" data-panel="ch1">
+          <p class="muted">在江山美景的詠唱中<b>忘卻故我</b>。蘇軾寓惠山水詩極其豐富，不僅為道教羅浮存照，凡惠州有名的風景名勝都進入他的詩歌之中；他想盡辦法忘卻充滿酸辛艱窘的過往，在山水美景中<b>自娛和自新</b>。</p>
+        </div>
+        <div class="panel" data-panel="ch2">
+          <p class="muted">在和陶之中<b>建構自己的精神家園</b>。惠州期間寫了 <b>四十七首「和陶詩」</b>，以陶淵明為精神對話的對象。</p>
+        </div>
+        <div class="panel" data-panel="ch3">
+          <ul class="dots">
+            <li>反映<b>惠州風俗面貌</b>和他在惠州期間生活的內容。</li>
+            <li>抒發內心的<b>矛盾和苦悶</b>。</li>
+            <li><b>懷古詠志</b>，探尋人生意義。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 九、荔枝 ============ -->
+<section class="wrap" id="lychee">
+  <div class="sec-head reveal"><span class="sec-no">09</span><h2>嶺南風物・荔枝的甜蜜與代價</h2></div>
+  <div class="rule"></div>
+  <p class="sec-desc reveal">惠州氣候溫暖，常年甜瓜香果不斷：荔枝、龍眼、柑橘、楊梅。蘇軾相當喜歡甜食，嶺南此一在別人眼中的瘴癘之地，對他來說卻是相當美妙。</p>
+
+  <div class="grid g2" style="align-items:start">
+    <div class="poem reveal" id="poemLizhi">
+      <div class="p-title">【四月十一日初食荔支】· 紹聖二年（1095）</div>
+      <div>
+        <span class="verse" data-exp="「垂黃綴紫」寫荔枝成熟時色彩繽紛，在煙雨之中，成了嶺南佳果的先驅。">垂黃綴紫煙雨裡，特與荔枝為先驅。</span><br>
+        <span class="verse" data-exp="以「海山仙人」比喻荔枝：絳羅襦是紅殼，紅紗中單是薄膜，白玉膚是晶瑩的果肉——层层譬喻，極寫荔枝之美。">海山仙人絳羅襦，紅紗中單白玉膚。</span><br>
+        <span class="verse" data-exp="「妃子笑」是荔枝別稱。東坡說：不必等待楊貴妃的偏愛，荔枝的風骨本就是傾城之姿——暗中翻轉了唐代典故。">不須更待妃子笑，風骨自是傾城姝。</span><br>
+        <span class="verse" data-exp="不知天公是否有意，竟把這等尤物派生在海隅荒遠之地——貶謫天涯，反而遇見人間至味。">不知天公有意無，遣此尤物生海隅。</span>
+      </div>
+      <div class="explain" id="expLizhi">👆 點擊詩句，查看解讀。來到瘴癘之地、古稱天涯海角的嶺南，東坡仍然不改他豁達的心性。</div>
+      <div class="poem-tools"><button class="mini-btn" data-all="poemLizhi">全部顯示解讀</button></div>
+    </div>
+
+    <div>
+      <div class="card reveal" style="border-left:4px solid var(--vermilion)">
+        <span class="tag red">這首詩的後果</span>
+        <h3 class="t" style="margin-top:10px">吃荔枝，吃出了第三次貶謫？</h3>
+        <ul class="dots">
+          <li>紹聖二年四月十一日，蘇軾在惠州<b>第一次吃荔枝</b>。</li>
+          <li>據傳這些詩句傳回了京城，讓當時宰相<b>章惇非常不高興</b>。</li>
+          <li>於是章惇又把東坡貶謫到更南邊的<b>儋州</b>（今海南島）。</li>
+          <li>此時東坡已<b>六十二歲</b>高齡，先後兩位妻子都不在了，跟他到惠州的愛妾王朝雲也在惠州任上過世。</li>
+        </ul>
+      </div>
+
+      <div class="card reveal" style="margin-top:18px">
+        <h3 class="t">典故：「妃子笑」與一騎紅塵</h3>
+        <div class="quote">長安回望繡成堆，山頂千門次第開。<br>一騎紅塵妃子笑，無人知是荔枝來。<small>唐・杜牧〈過華清宮絕句三首〉</small></div>
+        <p class="muted" style="margin-top:14px">南宋詩人謝枋得《註解選唐詩》：「明皇天寶間，涪州貢荔枝，到長安色香不變，貴妃乃喜。州縣以郵傳疾走稱上意，<b>人馬僵斃，相望於道</b>。」</p>
+        <p class="muted" style="margin-top:10px">唐玄宗為取悅楊貴妃，不惜勞師動眾，專設驛站，在荔枝成熟時採摘最好的荔枝，由嶺南快馬運送，一站緊接一站如接力賽般運到長安。驛吏拚命趕路，不僅人累僵了，也跑死不少好馬，途中更有路人被踩死踩傷。</p>
+        <div class="note">📌 對照閱讀：唐代荔枝是「民命的代價」；宋代東坡的荔枝卻是「貶謫中的自救」。同樣一顆果實，兩種書寫立場。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal" style="margin-top:24px">
+    <h3 class="t">蘇軾的三大美味（點卡翻面）</h3>
+    <div class="grid g3" style="margin-top:14px">
+      <div class="flip" style="height:170px"><div class="flip-inner">
+        <div class="flip-face" style="align-items:center;text-align:center"><div class="ico">🔴</div><h4>荔枝</h4><small>惠州・儋州</small></div>
+        <div class="flip-face flip-back"><p>嶺南佳果，為失意貶謫生活帶來絲絲甜蜜，留下多首相關詩作，如〈食荔支〉〈四月十一日初食荔支〉。</p></div>
+      </div></div>
+      <div class="flip" style="height:170px"><div class="flip-inner">
+        <div class="flip-face" style="align-items:center;text-align:center"><div class="ico">🐡</div><h4>河豚魚</h4><small>江南・沿江水味</small></div>
+        <div class="flip-face flip-back"><p>美味與劇毒並存，正如同他的宦海浮沉——明知危險，仍值得一嚐。</p></div>
+      </div></div>
+      <div class="flip" style="height:170px"><div class="flip-inner">
+        <div class="flip-face" style="align-items:center;text-align:center"><div class="ico">🐚</div><h4>江瑤柱</h4><small>海味珍品</small></div>
+        <div class="flip-face flip-back"><p>與荔枝、河豚並列為蘇軾三大美味。到了儋州，還有「生蠔」成為新的舌尖記憶。</p></div>
+      </div></div>
+    </div>
+    <div class="pill-row">
+      <span class="pill">黃州：東坡肉</span><span class="pill">惠州：羊脊骨・荔枝</span><span class="pill">儋州：生蠔</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 十、荔枝書寫史 ============ -->
+<section class="wrap" id="history">
+  <div class="sec-head reveal"><span class="sec-no">10</span><h2>荔枝的相關記載：一部書寫史</h2></div>
+  <div class="rule"></div>
+  <p class="sec-desc reveal">切換朝代，看荔枝如何從漢賦中的名物清單，一路走到明清文人結社大啖荔枝的文化盛況。<span class="note">（引用自洪弘：《中國古代荔枝書寫的分析研究》）</span></p>
+
+  <div class="tabs reveal" data-tabs="dyn">
+    <button class="tab-btn active" data-tab="d-han">漢</button>
+    <button class="tab-btn" data-tab="d-liu">六朝</button>
+    <button class="tab-btn" data-tab="d-tang">唐</button>
+    <button class="tab-btn" data-tab="d-song">宋</button>
+    <button class="tab-btn" data-tab="d-ming">明清</button>
+  </div>
+
+  <div class="panel active" data-panel="d-han">
+    <div class="dyn reveal">
+      <div class="era">漢</div>
+      <div class="body">
+        <p class="muted">荔枝的書寫最早可追溯至<b>西漢</b>，且在漢代也曾經有過<b>移植嘗試</b>。漢武帝時期征服了南越交趾，嶺南每年都要向宮廷進獻大量的荔枝和荔枝樹，甚至還建立了<b>扶荔宮</b>。</p>
+        <div class="quote">答沓離支，羅乎后宮，列乎北園。<small>司馬相如〈上林賦〉——「離支」即荔枝，漢賦中僅作簡單列名。</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" data-panel="d-liu">
+    <div class="dyn reveal">
+      <div class="era">六朝</div>
+      <div class="body">
+        <p class="muted">六朝時期，<b>四川南部</b>也開始產出荔枝。這樣的種植變遷影響了當時荔枝的書寫：從最初的漢賦簡單列名，及至六朝南方地記《南方草木狀》與農書《齊民要術》，相關記錄有了<b>更多細部描述</b>。</p>
+        <div class="quote">荔枝，樹高五六丈餘，如桂樹，緣葉蓬蓬，冬夏榮茂，青華朱實。<small>嵇含〈南方草木狀〉</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" data-panel="d-tang">
+    <div class="dyn reveal">
+      <div class="era">唐</div>
+      <div class="body">
+        <p class="muted">唐代詩人均曾吟詠<b>四川地區</b>的荔枝，皆是荔枝產地擴張伴隨而來的現象。亦有<b>楊貴妃喜食荔枝</b>之軼事，讓荔枝與政治奢靡緊緊綁定。</p>
+        <div class="quote">一騎紅塵妃子笑，無人知是荔枝來。<small>杜牧〈過華清宮絕句三首〉</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" data-panel="d-song">
+    <div class="dyn reveal">
+      <div class="era">宋</div>
+      <div class="body">
+        <p class="muted">北宋初，蔡襄《荔枝譜》介紹了<b>福建四郡</b>的荔枝，使得福建地區的荔枝名聲開始高過四川地區。背後原因無非是福建一帶的荔枝已具有相當規模，得以讓蔡襄特別記錄<b>三十餘種荔枝品種</b>。隨後也產生些許特殊的文化現象，比如以荔枝為主的<b>節慶、繪畫、地名</b>等；不僅如此，飲食與藥方也開始嘗試摻入荔枝。</p>
+        <div class="note">🎨 圖像材料：宋徽宗〈寫生翎毛圖〉局部。</div>
+        <h3 class="t" style="margin-top:18px">蔡襄《荔枝譜》・製作荔枝乾的三種方法</h3>
+        <div class="grid g3" style="margin-top:12px">
+          <div class="method"><div class="idx">鹽</div><div><b>紅鹽法</b><p class="muted" style="font-size:14.5px">以鹽梅滷浸佛桑花為紅漿，投荔枝漬之，曝乾色紅而甘酸，可三四年不蟲。</p></div></div>
+          <div class="method"><div class="idx">曬</div><div><b>白曬法</b><p class="muted" style="font-size:14.5px">正爾烈日乾之，以核堅為止。畜之甕中密封百日，謂之「出汗」。</p></div></div>
+          <div class="method"><div class="idx">蜜</div><div><b>蜜煎法</b><p class="muted" style="font-size:14.5px">剝生荔枝，笮去其漿，然後蜜煮之。</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" data-panel="d-ming">
+    <div class="dyn reveal">
+      <div class="era">明清</div>
+      <div class="body">
+        <p class="muted">因為<b>福建、廣東</b>地區的荔枝品種增加，而有更多文人撰寫荔枝譜，為更新荔枝品種數目。此時更有<b>以荔枝為號召的文人集社</b>，每逢荔枝結果時便齊聚一堂，大啖荔枝、吟詠詩文。</p>
+        <div class="quote">十七年來思荔支，夢中猶誦蘇公詩。<small>謝肇淛〈食火山荔支次王龜齡韻〉——數百年後，東坡的荔枝詩仍在文人口中流傳。</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal" style="margin-top:24px">
+    <h3 class="t">小結：書寫重心的移動</h3>
+    <div class="pill-row">
+      <span class="pill red">漢：宮廷貢物・簡單列名</span>
+      <span class="pill gold">六朝：產地擴張・細部描述</span>
+      <span class="pill jade">唐：詩歌吟詠・妃子笑典故</span>
+      <span class="pill">宋：譜錄專書・文化現象</span>
+      <span class="pill red">明清：品種更新・文人結社</span>
+    </div>
+    <p class="note">產地由嶺南 → 四川 → 福建／廣東；書寫由「賦中名物」→「農書地記」→「詩歌典故」→「譜錄與社群活動」。</p>
+  </div>
+</section>
+
+<!-- ============ 十一、測驗 ============ -->
+<section class="wrap" id="quiz">
+  <div class="sec-head reveal"><span class="sec-no">QUIZ</span><h2>互動測驗：你有多懂東坡？</h2></div>
+  <div class="rule"></div>
+  <p class="sec-desc reveal">共 12 題，答題後立即顯示解說。答對 8 題以上可獲得「東坡知己」勳章。</p>
+
+  <div class="quiz reveal" id="quizBox">
+    <div class="q-top">
+      <span class="tag red" id="qCount">第 1 / 12 題</span>
+      <div class="q-bar"><i id="qFill"></i></div>
+      <span class="tag gold" id="qScore">得分 0</span>
+    </div>
+    <div id="qBody">
+      <div class="q-text" id="qText"></div>
+      <div id="qOpts"></div>
+      <div class="feedback" id="qFb"></div>
+    </div>
+    <div class="q-foot">
+      <span class="note" id="qHint">選擇一個答案即可</span>
+      <button class="btn btn-primary" id="qNext" style="display:none;padding:11px 24px">下一題 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 十二、字卡 ============ -->
+<section class="wrap" id="cards">
+  <div class="sec-head reveal"><span class="sec-no">CARDS</span><h2>名詞快閃字卡</h2></div>
+  <div class="rule"></div>
+  <p class="sec-desc reveal">點擊卡片翻面看解釋，適合考前快速複習。</p>
+  <div class="grid g3" id="flashArea"></div>
+  <div style="display:flex;gap:10px;justify-content:center;margin-top:22px;flex-wrap:wrap">
+    <button class="mini-btn" id="shuffleCards">🔀 重新洗牌</button>
+    <button class="mini-btn" id="flipAll">↕ 全部翻面</button>
+  </div>
+</section>
+
+<!-- ============ 重點整理 ============ -->
+<section class="wrap" id="summary">
+  <div class="sec-head reveal"><span class="sec-no">SUMMARY</span><h2>一頁重點整理</h2></div>
+  <div class="rule"></div>
+  <div class="grid g3">
+    <div class="card reveal">
+      <h3 class="t">① 政治線</h3>
+      <ul class="dots">
+        <li>新舊黨爭由政見之爭演變為奪權之爭。</li>
+        <li>烏臺詩案（1079）→ 貶黃州（1080）。</li>
+        <li>章惇獨相（1094）→ 貶惠州；食荔支詩傳京 → 再貶儋州（1097）。</li>
+        <li>徽宗即位，章惇遠謫雷州；蘇軾北歸，覆書慰問章援。</li>
+      </ul>
+    </div>
+    <div class="card reveal">
+      <h3 class="t">② 情感線</h3>
+      <ul class="dots">
+        <li>遣散家人，主僕五人赴惠州。</li>
+        <li>朝雲篤信佛法、識字學佛，是東坡的知己。</li>
+        <li>紹聖三年（1096）朝雲卒，年三十四，葬棲禪寺，作亭曰六如亭。</li>
+        <li>「學士一肚子不合時宜」——朝雲最懂東坡。</li>
+      </ul>
+    </div>
+    <div class="card reveal">
+      <h3 class="t">③ 文學線</h3>
+      <ul class="dots">
+        <li>〈過大庾嶺〉：浩然天地間，唯我獨也正。</li>
+        <li>寓惠山水詩：為羅浮存照，忘卻故我、自娛自新。</li>
+        <li>四十七首和陶詩：建構精神家園。</li>
+        <li>荔枝詩與「妃子笑」典故的翻轉。</li>
+        <li>〈自題金山畫像〉：黃州惠州儋州。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="serif" style="font-size:18px;margin-bottom:6px">日啖荔枝三百顆，不辭長作嶺南人。</div>
+  <div>本網頁依據課程講義《9月23日課程講義：蘇軾在惠州》與《0923蘇軾在惠州》簡報整理製作，供教學與學習使用。</div>
+</footer>
+
+<button id="toTop" title="回到頂端">↑</button>
+
+<script>
+/* ================= 資料 ================= */
+const EXILES = [
+  {
+    name:"黃州（湖北）", no:"第一次被貶", time:"1080–1084",
+    reason:"因烏臺詩案觸怒權貴，被捕入獄，後貶為黃州團練副使，本州安置，不得簽署公事。",
+    works:"〈前赤壁賦〉、〈後赤壁賦〉、〈定風波・莫聽穿林打葉聲〉",
+    food:"東坡肉",
+    note:"心態：「極力擺脫名利」。團練副使為閒職，實質上是被貶。"
+  },
+  {
+    name:"惠州（廣東）", no:"第二次被貶", time:"1094–1097",
+    reason:"章惇、安燾執政，蘇軾遭來之邵彈劾「謗譏先帝」；由定州落職貶知英州，途中章惇、蔡京、來之邵持續攻擊，哲宗兩次加重處分，改貶寧遠軍節度副使、惠州安置。",
+    works:"〈食荔支〉、〈寄羅浮道士鄧守安〉、四十七首和陶詩、〈過大庾嶺〉",
+    food:"羊脊骨、荔枝",
+    note:"心態：「身世永相忘」。朝雲於此過世，葬於西湖南畔棲禪寺六如亭。"
+  },
+  {
+    name:"儋州（海南島）", no:"第三次被貶", time:"1097–1100",
+    reason:"遭政敵陷害，被遠貶海南。蔡京派遣呂升卿、董必等去嶺南謀害蘇軾兄弟，曾布向皇帝進言不可，救兩人免於大難。據傳食荔枝詩傳回京城，令章惇不悅，遂再貶更南。",
+    works:"〈儋耳〉、《東坡易傳》、《東坡書傳》、《論語說》",
+    food:"生蠔",
+    note:"六十二歲高齡渡海，卻在此完成重要學術著述；後得赦北歸。"
+  }
+];
+
+const FAMILY = [
+  {n:"王弗", r:"元配", c:"#8a5a4a", d:"長子蘇邁之生母。早逝，蘇軾有〈江城子・乙卯正月二十日夜記夢〉悼亡之作。"},
+  {n:"王閏之", r:"繼室（王弗堂妹）", c:"#6d7f5a", d:"蘇迨、蘇過之生母。陪伴蘇軾走過宦海動盕的歲月。"},
+  {n:"王朝雲", r:"侍妾", c:"#b0342a", d:"字子霞，錢塘人，原為歌女，十二歲入蘇家。後學寫字、從義沖學佛。隨蘇軾至惠州，紹聖三年（1096）卒，年三十四，葬棲禪寺，亭名六如。"},
+  {n:"蘇邁", r:"長子（王弗生）", c:"#4a5f7a", d:"貶惠州前，蘇軾安排蘇迨、蘇過的妻兒到宜興，與蘇邁同住。"},
+  {n:"蘇迨", r:"次子（王閏之生）", c:"#5b6f66", d:"其妻兒被安排前往宜興，未隨父赴嶺南。"},
+  {n:"蘇過", r:"三子（王閏之生）", c:"#7a6a4a", d:"其妻兒同往宜興；蘇過後亦陪伴父親度過貶謫歲月。"},
+  {n:"蘇遁", r:"幼子（朝雲生）", c:"#9a6b3f", d:"隨父前往惠州，未滿周歲而卒。"},
+  {n:"兩位老婢", r:"隨行家僕", c:"#6a6a6a", d:"與蘇軾、朝雲、蘇遁同行，主僕共五人前往惠州。"}
+];
+
+const QUIZ = [
+  {q:"蘇軾第一次被貶至黃州，是因為哪一樁事件？",o:["烏臺詩案","靖康之難","安史之亂","濮議之爭"],a:0,e:"元豐二年（1079）烏臺詩案爆發，蘇軾下御史臺獄一百三十天，出獄後於元豐三年（1080）貶至黃州。"},
+  {q:"「烏臺」指的是下列哪一個官署？",o:["御史臺","翰林院","大理寺","尚書省"],a:0,e:"漢代御史府內遍植柏樹，又稱「柏臺」；柏樹上常有烏鴉棲息築巢，故稱烏臺。"},
+  {q:"蘇軾第二次被貶的地點與時間是？",o:["儋州・紹聖四年","惠州・紹聖元年","黃州・元豐三年","英州・紹聖元年"],a:1,e:"宋哲宗紹聖元年（1094），新黨再起、章惇為相，蘇軾被貶惠州；原命貶知英州，途中遭加重處分。"},
+  {q:"在烏臺詩案中，誰「不顧黨派利益，極力救助蘇軾」？",o:["王安石","章惇","司馬光","李定"],a:1,e:"章惇極力救助蘇軾，蘇軾出獄謫居黃州後，章惇更致書勸勉，互動密切。當日救他的朋友，日後卻成了貶他的宰相。"},
+  {q:"蘇軾說章惇「子厚必能殺人」，其依據是？",o:["章惇帶兵屠城","章惇能攀絕壁題字，面不改色","章惇彈劾百官","章惇反對立端王"],a:1,e:"章惇能攀絕壁題字而面不改色，蘇軾由此看出其膽氣與狠勁，遂有「子厚必能殺人」之評。"},
+  {q:"蘇軾五十九歲南下惠州時，同行者共幾人？",o:["三人","四人","五人","七人"],a:2,e:"蘇軾自己 + 幼子蘇遁 + 侍妾朝雲 + 兩位老婢 = 主僕五人；蘇迨、蘇過的妻兒則被安排到宜興與蘇邁同住。"},
+  {q:"朝雲過世的時間與年齡是？",o:["紹聖二年（1095），年三十二","紹聖三年（1096），年三十四","紹聖四年（1097），年三十六","元符三年（1100），年四十"],a:1,e:"紹聖三年（1096）七月初五日朝雲卒，年三十四；八月三日葬於惠州西湖南畔棲禪寺。"},
+  {q:"蘇軾為朝雲葬處所建之亭，命名為？",o:["棲禪亭","六如亭","大悲亭","芳草亭"],a:1,e:"朝雲彌留之際口誦《金剛經》六如偈：「一切為有法，如夢幻泡影。如露亦如電，應作如是觀。」故亭名「六如亭」。"},
+  {q:"「學士一肚子不合時宜」是誰說的？",o:["王閏之","蘇過","朝雲","一名老婢"],a:2,e:"兩名婢子分別答「錦繡文章」「滿腹學問才華」，蘇軾都不以為然；朝雲笑答「一肚子不合時宜」，惹得蘇軾捧腹大笑。"},
+  {q:"蘇軾在惠州期間寫了多少首「和陶詩」？",o:["十七首","三十三首","四十七首","一百首"],a:2,e:"惠州期間共作四十七首和陶詩，大致分三類：反映惠州風俗與生活；抒發內心矛盾苦悶；懷古詠志、探尋人生意義。"},
+  {q:"北宋蔡襄《荔枝譜》主要介紹哪一地區的荔枝？",o:["四川地區","福建四郡","廣東岭南","海南島"],a:1,e:"蔡襄記錄福建四郡三十餘種荔枝品種，使福建荔枝名聲開始高過四川地區。"},
+  {q:"「一騎紅塵妃子笑，無人知是荔枝來」的作者是？",o:["杜牧","謝枋得","謝肇淛","嵇含"],a:0,e:"出自唐代杜牧〈過華清宮絕句三首〉；南宋謝枋得《註解選唐詩》进一步說明涪州貢荔枝、郵傳疾走、人馬僵斃的情形。"}
+];
+
+const CARDS = [
+  {t:"烏臺",b:"御史臺的別稱。漢代御史府植柏，又稱柏臺；柏上多烏鴉築巢，故稱烏臺。"},
+  {t:"元祐黨人",b:"舊黨人士。紹聖元年新黨再起，章惇為相，開始對「元祐黨人」進行迫害，蘇軾首當其衝。"},
+  {t:"安置・不得簽署公事",b:"貶官的一種形式：只許居住於指定州郡，無實權、不得參與公文簽署，形同軟禁。"},
+  {t:"寧遠軍節度副使",b:"哲宗兩次加重處分後給蘇軾的頭銜，惠州安置。名義上是副使，實際上毫無權柄。"},
+  {t:"六如偈",b:"《金剛經》：「一切為有法，如夢幻泡影。如露亦如電，應作如是觀。」朝雲彌留時口誦，六如亭因此得名。"},
+  {t:"和陶詩",b:"追和陶淵明詩韻之作。蘇軾惠州期間作四十七首，用以建構自己的精神家園。"},
+  {t:"妃子笑",b:"荔枝的別稱，源自楊貴妃喜食荔枝的典故；杜牧「一騎紅塵妃子笑，無人知是荔枝來」。"},
+  {t:"大庾嶺",b:"五嶺之一，進入廣東的要道。蘇軾翻越時作〈過大庾嶺〉：「浩然天地間，唯我獨也正。」"},
+  {t:"羅浮",b:"道教名山，位於惠州附近。蘇軾寓惠山水詩「不僅為道教羅浮存照」，另有〈寄羅浮道士鄧守安〉。"},
+  {t:"紅鹽法／白曬法／蜜煎法",b:"蔡襄《荔枝譜》記載的三種荔枝乾製法：鹽梅滷浸佛桑花漬曬；烈日曬乾後甕中密封百日「出汗」；剝殼笮漿後蜜煮。"},
+  {t:"《南方草木狀》",b:"六朝嵇含所撰南方地記，對荔枝有較細部的描述：「樹高五六丈餘，如桂樹，緣葉蓬蓬，冬夏榮茂，青華朱實。」"},
+  {t:"身世永相忘",b:"惠州時期的核心心態，由黃州「極力擺脫名利」進一步轉化：連自身與世事也一併放下。"}
+];
+
+const QUOTES = [
+  ["心似已灰之木，身如不繫之舟。問汝平生功業，黃州惠州儋州。","——蘇軾〈自題金山畫像〉"],
+  ["一念失垢污，身心洞清淨。浩然天地間，唯我獨 also正。".replace(" also",""),"——蘇軾〈過大庾嶺〉"],
+  ["海山仙人絳羅襦，紅紗中單白玉膚。不須更待妃子笑，風骨自是傾城姝。","——蘇軾〈四月十一日初食荔支〉"],
+  ["枝上柳綿吹又少，天涯何處無芳草。","——〈蝶戀花〉句，朝雲所不能歌者"],
+  ["學士一肚子不合時宜。","——王朝雲笑答東坡"],
+  ["浮屠是瞻，伽藍是依。如汝宿心，唯佛是歸。","——蘇軾〈朝雲墓誌銘〉"],
+  ["一騎紅塵妃子笑，無人知是荔枝來。","——杜牧〈過華清宮絕句三首〉"],
+  ["十七年來思荔支，夢中猶誦蘇公詩。","——謝肇淛〈食火山荔支次王龜齡韻〉"]
+];
+
+const MAP_ITEMS = [
+  {id:"identity", t:"01 蘇軾的多重身分"},
+  {id:"party", t:"02 新舊黨爭概談"},
+  {id:"wutai", t:"03 烏臺詩案"},
+  {id:"exile", t:"04 三次被貶・自題金山畫像"},
+  {id:"zhangdun", t:"05 關鍵人物章惇"},
+  {id:"family", t:"06 家族與遣散家人"},
+  {id:"chaoyun", t:"07 愛妾朝雲"},
+  {id:"change", t:"08 惠州時期的心境轉變"},
+  {id:"lychee", t:"09 嶺南風物・荔枝"},
+  {id:"history", t:"10 荔枝書寫史"},
+  {id:"quiz", t:"11 互動測驗"},
+  {id:"cards", t:"12 名詞快閃字卡"}
+];
+
+/* ================= 工具 ================= */
+const $ = (s,c=document)=>c.querySelector(s);
+const $$ = (s,c=document)=>Array.from(c.querySelectorAll(s));
+const store = {
+  get(k,d){ try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v);}catch(e){return d;} },
+  set(k,v){ try{localStorage.setItem(k,JSON.stringify(v));}catch(e){} }
+};
+
+/* ================= 導覽 / 進度 ================= */
+const nav = $("#nav"), navLinks = $("#navLinks");
+let lastY = 0;
+function onScroll(){
+  const y = window.scrollY;
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  $("#progressBar").style.width = (h>0 ? (y/h*100) : 0) + "%";
+  if(y > lastY && y > 260) nav.classList.add("hide"); else nav.classList.remove("hide");
+  nav.classList.toggle("shadowed", y>10);
+  lastY = y;
+  $("#toTop").classList.toggle("show", y>600);
+}
+window.addEventListener("scroll", onScroll, {passive:true});
+$("#toTop").onclick = ()=>window.scrollTo({top:0,behavior:"smooth"});
+$("#burger").onclick = ()=>navLinks.classList.toggle("open");
+$$("#navLinks a").forEach(a=>a.onclick=()=>navLinks.classList.remove("open"));
+
+/* 側邊點 */
+const SECS = ["start","identity","party","wutai","exile","zhangdun","family","chaoyun","change","lychee","history","quiz","cards"];
+const tips = {start:"首頁",identity:"多重身分",party:"黨爭",wutai:"烏臺詩案",exile:"三次被貶",zhangdun:"章惇",family:"家族",chaoyun:"朝雲",change:"心境",lychee:"荔枝",history:"書寫史",quiz:"測驗",cards:"字卡"};
+$("#dotsNav").innerHTML = SECS.map(id=>`<a href="#${id}" data-tip="${tips[id]}" data-sec="${id}"></a>`).join("");
+
+/* reveal + active 觀察 */
+const io = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} });
+},{threshold:.12});
+$$(".reveal").forEach(el=>io.observe(el));
+
+const io2 = new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      const id = e.target.id;
+      $$("#dotsNav a").forEach(a=>a.classList.toggle("on", a.dataset.sec===id));
+      const link = $(`#navLinks a[href="#${id}"]`);
+      if(link){ $$("#navLinks a").forEach(a=>a.classList.remove("active")); link.classList.add("active");
+        link.scrollIntoView({block:"nearest",inline:"center"}); }
+    }
+  });
+},{threshold:.2, rootMargin:"-20% 0px -60% 0px"});
+SECS.forEach(id=>{const el=document.getElementById(id); if(el) io2.observe(el);});
+
+/* ================= 主題 / 字級 ================= */
+const themeBtn = $("#themeBtn");
+function setTheme(t){ document.documentElement.setAttribute("data-theme", t==="night"?"night":""); themeBtn.textContent = t==="night"?"☀":"☾"; store.set("ss_theme",t); }
+setTheme(store.get("ss_theme","day"));
+themeBtn.onclick = ()=> setTheme(document.documentElement.getAttribute("data-theme")==="night"?"day":"night");
+
+let fs = store.get("ss_fs", 17);
+function applyFs(){ fs=Math.max(14,Math.min(22,fs)); document.documentElement.style.setProperty("--fs",fs+"px"); store.set("ss_fs",fs); }
+applyFs();
+$("#fontUp").onclick=()=>{fs++;applyFs();};
+$("#fontDown").onclick=()=>{fs--;applyFs();};
+
+/* ================= Hero 名句 ================= */
+let qi = 0;
+$("#quoteBtn").onclick = ()=>{
+  qi = (qi+1) % QUOTES.length;
+  const q = $("#heroQuote"), s = $("#heroSrc");
+  q.style.opacity=0; s.style.opacity=0;
+  setTimeout(()=>{ q.textContent=QUOTES[qi][0]; s.textContent=QUOTES[qi][1]; q.style.opacity=1; s.style.opacity=1; },220);
+};
+$("#heroQuote").style.transition="opacity .25s"; $("#heroSrc").style.transition="opacity .25s";
+
+/* ================= 學習地圖 ================= */
+let done = store.get("ss_map", []);
+function renderMap(){
+  $("#checkList").innerHTML = MAP_ITEMS.map(it=>`
+    <div class="check ${done.includes(it.id)?'done':''}" data-id="${it.id}">
+      <span class="box">${done.includes(it.id)?'✓':''}</span>
+      <span>${it.t}</span>
+      <a href="#${it.id}" class="mini-btn" style="margin-left:auto;padding:4px 12px;font-size:12.5px" onclick="event.stopPropagation()">前往</a>
+    </div>`).join("");
+  $$("#checkList .check").forEach(c=>{
+    c.onclick = ()=>{
+      const id=c.dataset.id;
+      if(done.includes(id)) done = done.filter(x=>x!==id); else done.push(id);
+      store.set("ss_map",done); renderMap();
+    };
+  });
+  const pct = Math.round(done.length/MAP_ITEMS.length*100);
+  $("#mapPct").textContent = pct+"%";
+  $("#mapRingFill").style.strokeDashoffset = 326.7*(1-pct/100);
+  $("#badge").style.display = pct===100 ? "block":"none";
+}
+renderMap();
+$("#resetMap").onclick = ()=>{ done=[]; store.set("ss_map",done); renderMap(); };
+
+/* ================= 翻牌卡 ================= */
+document.addEventListener("click", e=>{
+  const f = e.target.closest(".flip");
+  if(f) f.classList.toggle("on");
+});
+
+/* ================= Tabs ================= */
+$$("[data-tabs]").forEach(group=>{
+  const key = group.dataset.tabs;
+  group.addEventListener("click", e=>{
+    const b = e.target.closest(".tab-btn"); if(!b) return;
+    $$(".tab-btn",group).forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    const id = b.dataset.tab;
+    const scope = group.parentElement;
+    $$(`[data-panel]`, scope).forEach(p=>{
+      if(p.dataset.panel.startsWith(key.slice(0,2)) || scope.contains(p)){
+        p.classList.toggle("active", p.dataset.panel===id);
+      }
+    });
+  });
+});
+
+/* ================= 手風琴 ================= */
+$$(".acc").forEach(acc=>{
+  const h = $(".acc-h",acc), b = $(".acc-b",acc);
+  h.onclick = ()=>{
+    const open = acc.classList.contains("open");
+    acc.parentElement.querySelectorAll(".acc").forEach(o=>{o.classList.remove("open"); $(".acc-b",o).style.maxHeight=null;});
+    if(!open){ acc.classList.add("open"); b.style.maxHeight = b.scrollHeight+"px"; }
+  };
+});
+
+/* ================= 三次被貶 ================= */
+function renderExile(i){
+  const d = EXILES[i];
+  $("#exileDetail").innerHTML = `
+    <div class="meta">${d.no} ・ ${d.time}</div>
+    <h3>${d.name}</h3>
+    <dl>
+      <dt>貶官原因</dt><dd>${d.reason}</dd>
+      <dt>代表作品</dt><dd>${d.works}</dd>
+      <dt>代表美食</dt><dd>${d.food}</dd>
+      <dt>備註</dt><dd>${d.note}</dd>
+    </dl>`;
+  $$(".node").forEach(n=>n.classList.toggle("sel", +n.dataset.id===i));
+}
+$$(".node").forEach(n=>n.addEventListener("click",()=>renderExile(+n.dataset.id)));
+renderExile(1);
+
+/* ================= 詩句解讀 ================= */
+$$(".poem").forEach(poem=>{
+  const exp = $(".explain",poem);
+  $$(".verse",poem).forEach(v=>{
+    v.onclick = ()=>{
+      $$(".verse",poem).forEach(x=>x.classList.remove("picked"));
+      v.classList.add("picked");
+      exp.innerHTML = `<b>${v.textContent}</b><br>${v.dataset.exp}`;
+    };
+  });
+  const all = $("[data-all]",poem);
+  if(all) all.onclick = ()=>{
+    const txt = $$(".verse",poem).map(v=>`<b>${v.textContent}</b> ${v.dataset.exp}`).join("<br><br>");
+    exp.innerHTML = txt;
+    $$(".verse",poem).forEach(x=>x.classList.add("picked"));
+  };
+});
+
+/* ================= 家族 ================= */
+$("#familyGrid").innerHTML = FAMILY.map((m,i)=>`
+  <div class="fcard" data-i="${i}">
+    <div class="avatar" style="background:${m.c}">${m.n.charAt(0)}</div>
+    <h4>${m.n}</h4>
+    <div class="role">${m.r}</div>
+    <div class="more"><p>${m.d}</p></div>
+  </div>`).join("");
+$$(".fcard").forEach(c=>c.onclick=()=>{
+  const was = c.classList.contains("sel");
+  $$(".fcard").forEach(x=>x.classList.remove("sel"));
+  if(!was) c.classList.add("sel");
+});
+
+/* ================= 朝雲劇場 ================= */
+const PLAY = [
+  {s:"蘇軾", t:"你們且猜猜看，我這肚子裡裝的都是些什麼？", side:"right"},
+  {s:"婢子甲", t:"都是錦繡文章！", side:"left"},
+  {s:"蘇軾", t:"（搖頭，不以為然）", side:"right", laugh:true},
+  {s:"婢子乙", t:"滿腹都是學問才華。", side:"left"},
+  {s:"蘇軾", t:"（仍是不予認同）", side:"right", laugh:true},
+  {s:"朝雲", t:"學士一肚子不合時宜。", side:"left"},
+  {s:"蘇軾", t:"（捧腹大笑）知我者，朝雲也！", side:"right", laugh:true}
+];
+let playTimer=null;
+function resetPlay(){ clearTimeout(playTimer); $("#playArea").innerHTML=""; $("#playBtn").disabled=false; $("#playBtn").style.opacity=1; }
+function playScene(){
+  resetPlay();
+  $("#playBtn").disabled=true; $("#playBtn").style.opacity=.5;
+  PLAY.forEach((line,i)=>{
+    playTimer = setTimeout(()=>{
+      const b=document.createElement("div");
+      b.className = "bubble "+line.side+(line.laugh?" laugh":"");
+      b.innerHTML = `<span class="who">${line.s}</span>${line.t}`;
+      $("#playArea").appendChild(b);
+      $("#playArea").scrollTop = $("#playArea").scrollHeight;
+      if(i===PLAY.length-1){ $("#playBtn").disabled=false; $("#playBtn").style.opacity=1; }
+    }, i*1100);
+  });
+}
+$("#playBtn").onclick = playScene;
+$("#resetPlay").onclick = ()=>{ resetPlay(); };
+
+/* ================= 測驗 ================= */
+let qi2=0, score=0, wrongs=[], locked=false;
+function renderQ(){
+  const q = QUIZ[qi2];
+  locked=false;
+  $("#qCount").textContent = `第 ${qi2+1} / ${QUIZ.length} 題`;
+  $("#qScore").textContent = `得分 ${score}`;
+  $("#qFill").style.width = (qi2/QUIZ.length*100)+"%";
+  $("#qText").textContent = q.q;
+  $("#qOpts").innerHTML = q.o.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${"ABCD"[i]}</span>${o}</button>`).join("");
+  $("#qFb").classList.remove("show"); $("#qFb").innerHTML="";
+  $("#qNext").style.display="none";
+  $("#qHint").textContent="選擇一個答案即可";
+  $$("#qOpts .opt").forEach(b=>b.onclick=()=>answer(+b.dataset.i));
+}
+function answer(i){
+  if(locked) return; locked=true;
+  const q = QUIZ[qi2];
+  const btns = $$("#qOpts .opt");
+  btns.forEach(b=>b.disabled=true);
+  btns[q.a].classList.add("right");
+  const fb = $("#qFb");
+  if(i===q.a){
+    score++;
+    fb.innerHTML = `<b style="color:var(--jade)">✅ 答對了！</b> ${q.e}`;
+  }else{
+    btns[i].classList.add("wrong");
+    wrongs.push({q:q.q, your:q.o[i], right:q.o[q.a], e:q.e});
+    fb.innerHTML = `<b style="color:var(--vermilion)">❌ 再想想。</b> ${q.e}`;
+  }
+  fb.classList.add("show");
+  $("#qScore").textContent = `得分 ${score}`;
+  $("#qHint").textContent = qi2===QUIZ.length-1 ? "最後一題！" : "看解說，再繼續";
+  const nx = $("#qNext");
+  nx.style.display="inline-flex";
+  nx.textContent = qi2===QUIZ.length-1 ? "查看結果 🏁" : "下一題 →";
+  nx.onclick = ()=>{ qi2++; if(qi2<QUIZ.length) renderQ(); else renderResult(); };
+}
+function renderResult(){
+  const pct = Math.round(score/QUIZ.length*100);
+  const pass = score>=8;
+  const C=326.7, off=C*(1-pct/100);
+  $("#quizBox").innerHTML = `
+    <div style="text-align:center">
+      <svg class="score-ring" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="52" fill="none" stroke="var(--line)" stroke-width="10"/>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="${pass?'var(--jade)':'var(--vermilion)'}" stroke-width="10"
+          stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}" transform="rotate(-90 60 60)"
+          id="ringF" style="transition:stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1)"/>
+        <text x="60" y="58" text-anchor="middle" font-size="30" font-family="Noto Serif TC,serif" fill="var(--ink)">${score}</text>
+        <text x="60" y="78" text-anchor="middle" font-size="11" fill="var(--ink-3)" font-family="Noto Sans TC,sans-serif">/ ${QUIZ.length} 題</text>
+      </svg>
+      <h3 class="serif" style="font-size:26px">${pass?"🏅 東坡知己！":"📖 再讀一遍講義吧！"}</h3>
+      <p class="muted" style="margin-top:6px">正確率 ${pct}%。${pass?"你已掌握蘇軾在惠州的核心脈絡。":"回顧上方單元，尤其是烏臺詩案、朝雲與荔枝書寫史。"}</p>
+      ${wrongs.length?`<div class="wrong-list"><h4 class="serif" style="margin:18px 0 10px">錯題回顧（${wrongs.length}）</h4>${
+        wrongs.map(w=>`<div class="wi"><b>Q：</b>${w.q}<br><span style="color:var(--vermilion)">你的答案：${w.your}</span> ｜ <span style="color:var(--jade)">正解：${w.right}</span><br><span style="color:var(--ink-3)">${w.e}</span></div>`).join("")
+      }</div>`:`<p class="note">全部答對，無錯題！</p>`}
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:22px;flex-wrap:wrap">
+        <button class="btn btn-primary" id="retry">↻ 重新測驗</button>
+        <a class="btn btn-ghost" href="#summary">看重點整理</a>
+      </div>
+    </div>`;
+  requestAnimationFrame(()=>{ const r=$("#ringF"); if(r) r.style.strokeDashoffset=off; });
+  $("#retry").onclick = ()=>{ location.reload(); };
+  if(pass && !done.includes("quiz")){ done.push("quiz"); store.set("ss_map",done); renderMap(); }
+}
+renderQ();
+
+/* ================= 字卡 ================= */
+let cardOrder = CARDS.map((_,i)=>i);
+function renderCards(){
+  $("#flashArea").innerHTML = cardOrder.map(i=>`
+    <div class="flip flash reveal in">
+      <div class="flip-inner">
+        <div class="flash-face flash-front"><h3>${CARDS[i].t}</h3><small style="color:var(--ink-3);margin-top:8px">點擊翻面</small></div>
+        <div class="flash-face flash-back"><p>${CARDS[i].b}</p></div>
+      </div>
+    </div>`).join("");
+}
+renderCards();
+$("#shuffleCards").onclick = ()=>{
+  cardOrder.sort(()=>Math.random()-.5); renderCards();
+};
+$("#flipAll").onclick = ()=>{
+  const all = $$("#flashArea .flip");
+  const on = all.every(a=>a.classList.contains("on"));
+  all.forEach(a=>a.classList.toggle("on", !on));
+};
+
+/* 捲動到某區時自動勾選學習地圖 */
+const ioMap = new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting && e.intersectionRatio>.45){
+      const id=e.target.id;
+      if(MAP_ITEMS.some(m=>m.id===id) && !done.includes(id) && id!=="quiz"){
+        // 不自動勾選，保留學習者主動性
+      }
+    }
+  });
+},{threshold:[.45]});
+MAP_ITEMS.forEach(m=>{const el=document.getElementById(m.id); if(el) ioMap.observe(el);});
+
+onScroll();
+</script>
+</body>
+</html>
